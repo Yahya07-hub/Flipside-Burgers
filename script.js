@@ -1,22 +1,29 @@
 // Loader
-let load = document.getElementById("loader")
-setTimeout(() => {
-    load.style.display = "none"
-}, 2000);
+const hideLoader = () => {
+    const loader = document.getElementById("loader");
+    loader.style.display = "none";
+};
+  
+setTimeout(hideLoader, 2000);
 // Loader section ended
 
 // Scroll Up Button
-const scrollUpBtn = document.getElementById("scrollUp")
- window.onscroll = () => {
-    if (this.scrollY >= 250) {
-        scrollUpBtn.classList.remove("-bottom-1/2");
-        scrollUpBtn.classList.add("bottom-4");
+function initScrollUpButton() {
+    const scrollUpBtn = document.getElementById("scrollUp");
+  
+    window.onscroll = () => {
+        if (this.scrollY >= 250) {
+            scrollUpBtn.classList.remove("-bottom-1/2");
+            scrollUpBtn.classList.add("bottom-4");
+        }
+        else{
+            scrollUpBtn.classList.add("-bottom-1/2");
+            scrollUpBtn.classList.remove("bottom-4");   
+        }
     }
-    else{
-        scrollUpBtn.classList.add("-bottom-1/2");
-        scrollUpBtn.classList.remove("bottom-4");   
-    }
-}
+  }
+  
+initScrollUpButton();
 // End of Scroll Up Button Section
 
 // let userProfileName = document.getElementById("userName")
@@ -26,7 +33,7 @@ const scrollUpBtn = document.getElementById("scrollUp")
 // userProfileName.innerHTML = userProfile.username
 
 //   header border
-let headerBorder = () =>{
+const headerBorder = () =>{
     let border = document.getElementById("header")
          if (this.scrollY > 50){
         border.classList.add("border-b", "border-b-secondary", "-shadow-md");
@@ -79,27 +86,51 @@ srrest.reveal(".input_card", {origin: "bottom"});
 // End of Scroll reveal section
 
 // Night Mode
-let themeBtn = document.getElementById('themeBtn')
-let darkMode = document.querySelector('.ri-moon-line')
+// let themeBtn = document.getElementById('themeBtn')
+// let darkMode = document.querySelector('.ri-moon-line')
 
-if(localStorage.getItem("dark") === "true"){
-    document.documentElement.classList.add("dark")
-}
+// if(localStorage.getItem("dark") === "true"){
+//     document.documentElement.classList.add("dark")
+// }
 
-themeBtn.addEventListener('click', ()=> {
-    if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark')
+// themeBtn.addEventListener('click', ()=> {
+//     if (document.documentElement.classList.contains('dark')) {
+//         document.documentElement.classList.remove('dark')
         
-        darkMode.classList.add('ri-moon-line')
-        darkMode.classList.remove('ri-sun-line')
-        localStorage.setItem("dark", "false");
+//         darkMode.classList.add('ri-moon-line')
+//         darkMode.classList.remove('ri-sun-line')
+//         localStorage.setItem("dark", "false");
+//     } else {
+//         document.documentElement.classList.add('dark')
+//         darkMode.classList.add('ri-sun-line')
+//         darkMode.classList.remove('ri-moon-line') 
+//         localStorage.setItem("dark", "true");
+//     }
+// })
+
+function initThemeToggle() {
+    const themeBtn = document.getElementById('themeBtn');
+    const darkModeIcon = document.querySelector('.ri-moon-line');
+  
+    let isDarkMode = localStorage.getItem("dark") === "true";
+  
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      darkModeIcon.classList.replace('ri-sun-line', 'ri-moon-line');
     } else {
-        document.documentElement.classList.add('dark')
-        darkMode.classList.add('ri-sun-line')
-        darkMode.classList.remove('ri-moon-line') 
-        localStorage.setItem("dark", "true");
+      darkModeIcon.classList.replace('ri-moon-line', 'ri-sun-line');
     }
-})
+  
+    themeBtn.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      document.documentElement.classList.toggle("dark", isDarkMode);
+      darkModeIcon.classList.toggle('ri-sun-line', isDarkMode);
+      darkModeIcon.classList.toggle('ri-moon-line', !isDarkMode);
+      localStorage.setItem("dark", isDarkMode.toString());
+    });
+  }
+  
+  initThemeToggle();
 
 // header
 const hamburger = document.getElementById("hamburger");
