@@ -86,51 +86,50 @@ srrest.reveal(".input_card", {origin: "bottom"});
 // End of Scroll reveal section
 
 // Night Mode
-// let themeBtn = document.getElementById('themeBtn')
-// let darkMode = document.querySelector('.ri-moon-line')
+let themeBtn = document.getElementById('themeBtn')
+let darkMode = document.querySelector('.ri-moon-line')
 
-// if(localStorage.getItem("dark") === "true"){
-//     document.documentElement.classList.add("dark")
-// }
+if(localStorage.getItem("dark") === "true"){
+    document.documentElement.classList.add("dark")
+}
 
-// themeBtn.addEventListener('click', ()=> {
-//     if (document.documentElement.classList.contains('dark')) {
-//         document.documentElement.classList.remove('dark')
+themeBtn.addEventListener('click', ()=> {
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark')
         
-//         darkMode.classList.add('ri-moon-line')
-//         darkMode.classList.remove('ri-sun-line')
-//         localStorage.setItem("dark", "false");
-//     } else {
-//         document.documentElement.classList.add('dark')
-//         darkMode.classList.add('ri-sun-line')
-//         darkMode.classList.remove('ri-moon-line') 
-//         localStorage.setItem("dark", "true");
-//     }
-// })
+        darkMode.classList.add('ri-moon-line')
+        darkMode.classList.remove('ri-sun-line')
+        localStorage.setItem("dark", "false");
+    } else {
+        document.documentElement.classList.add('dark')
+        darkMode.classList.add('ri-sun-line')
+        darkMode.classList.remove('ri-moon-line') 
+        localStorage.setItem("dark", "true");
+    }
+})
 
 function initThemeToggle() {
     const themeBtn = document.getElementById('themeBtn');
-    const darkModeIcon = document.querySelector('.ri-moon-line');
+    const darkModeIcon = document.querySelector('i');
   
     let isDarkMode = localStorage.getItem("dark") === "true";
   
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      darkModeIcon.classList.replace('ri-sun-line', 'ri-moon-line');
-    } else {
-      darkModeIcon.classList.replace('ri-moon-line', 'ri-sun-line');
-    }
+    // Simplify the initial state setup
+    document.documentElement.classList.toggle("dark", isDarkMode);
+    darkModeIcon.classList.toggle('ri-moon-line', isDarkMode);
+    darkModeIcon.classList.toggle('ri-sun-line', !isDarkMode);
   
     themeBtn.addEventListener('click', () => {
       isDarkMode = !isDarkMode;
-      document.documentElement.classList.toggle("dark", isDarkMode);
-      darkModeIcon.classList.toggle('ri-sun-line', isDarkMode);
-      darkModeIcon.classList.toggle('ri-moon-line', !isDarkMode);
+      // Simplify the toggle logic
+      document.documentElement.classList.toggle("dark");
+      darkModeIcon.classList.toggle('ri-moon-line');
+      darkModeIcon.classList.toggle('ri-sun-line');
       localStorage.setItem("dark", isDarkMode.toString());
     });
   }
   
-  initThemeToggle();
+//   initThemeToggle();
 
 // header
 const hamburger = document.getElementById("hamburger");
@@ -239,7 +238,7 @@ function generateRandomKey() {
 // Username on Profile toggle
 showUsername = () => {
     let userProfileName = document.querySelector("#userProfileName")
-    signupProfile = JSON.parse(localStorage.getItem(`user-${userKey}`))
+    signupProfile = JSON.parse(localStorage.getItem(`${userKey}`))
     userProfileName.innerHTML = signupProfile.username
 }
 
